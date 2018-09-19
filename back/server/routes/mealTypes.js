@@ -1,4 +1,4 @@
-const { MealType } = require('../models/MealType')
+const { MealType } = require('../models/mealType')
 const mealTypes = require('../data/mealTypes.json')
 
 exports.addMealTypes = async (req, res) => {
