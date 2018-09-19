@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Paper, Avatar, Button, TextField } from '@material-ui/core'
 import keycode from 'keycode'
-
+import format from 'date-fns/format'
 import { Autocomplete, FoodCard, SimpleSelect } from '../../components'
 import styles from './styles.css'
 
@@ -36,7 +36,8 @@ class CreateCalories extends React.Component {
     inputValue: '',
     selectedItem: [],
     selectedFood: [],
-    mealType: ''
+    mealType: '',
+    date: ''
   }
 
   onChange = e => {
@@ -87,7 +88,7 @@ class CreateCalories extends React.Component {
   }
 
   onSave = e => {
-    const {meal, selectedFood, mealType} = this.state
+    const {meal, selectedFood, mealType, date} = this.state
   }
 
   render () {
@@ -114,6 +115,17 @@ class CreateCalories extends React.Component {
             name='mealType'
             value={this.state.mealType}
             onChange={this.onChange}
+          />
+          <TextField
+            id='date'
+            label='Fecha'
+            type='date'
+            name='date'
+            defaultValue={format(new Date(), 'YYYY-MM-DD')}
+            onChange={this.onChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
           <Autocomplete
             label='Alimentos'
