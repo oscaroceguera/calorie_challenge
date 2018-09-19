@@ -1,0 +1,16 @@
+.header {
+  border-radius: 4px 4px 0px 0px;
+  padding: 0.5em;
+  color: white;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kcal {
+  margin: 0 0.5em 0 0;
+  color: #FF5722;
+}
