@@ -4,6 +4,7 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const { mongoose } = require('./db/mongoose')
 const port = process.env.PORT
 
 const app = express()
