@@ -1,0 +1,13 @@
+.container {
+  text-align: center;
+}
+
+.title {
+  font-size: 4em;
+  color: #424242;
+}
+
+.message {
+  font-size: 2em;
+  color: #9E9E9E;
+}

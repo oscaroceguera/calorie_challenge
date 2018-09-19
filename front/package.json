@@ -15,10 +15,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^3.1.0",
+    "@material-ui/icons": "^3.0.1",
+    "downshift": "^2.2.2",
+    "keycode": "^2.2.0",
+    "lodash": "^4.17.11",
+    "prop-types": "^15.6.2",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-loadable": "^5.5.0",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "react-tap-event-plugin": "^3.0.3"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.11",
@@ -40,6 +47,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "material-ui": "^0.20.2",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^2.0.0",
     "url-loader": "^1.1.1",

@@ -1,6 +1,6 @@
 import { configure } from '@storybook/react'
 
-// import '../src/containers/App/styles.css'
+import '../src/container/App/style.css'
 
 // automatically import all files ending in *.stories.js
 const req = require.context('../stories', true, /.stories.js$/)
