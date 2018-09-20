@@ -19,6 +19,11 @@ const InlStyle = theme => ({
     width: '100px',
     height: '100px',
     background: '#651fff'
+  },
+  deleteBtn: {
+    marginRight: '2em',
+    background: '#f44336',
+    color: 'white'
   }
 })
 
@@ -176,6 +181,22 @@ class CreateCalories extends React.Component {
     }
   }
 
+  onDelete = async (e) => {
+    this.setState({ loading: true })
+    const uuid = this.props.match.params.uuid
+
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/meals/${uuid}`)
+      this.setState({ loading: false })
+      this.props.history.push('/')
+    } catch (e) {
+      this.setState({
+        error: e.message,
+        loading: false
+      })
+    }
+  }
+
   componentWillUnmount () {
     this.setState(initialState)
   }
@@ -244,6 +265,16 @@ class CreateCalories extends React.Component {
             handleDelete={this.handleDelete}
           />
           <div className={styles.btnContainer}>
+            {this.props.match.params.uuid &&
+              <Button
+                className={classes.deleteBtn}
+                name='mealType'
+                variant='contained'
+                onClick={this.onDelete}
+              >
+                Eliminar
+              </Button>
+            }
             <Button 
               disabled={!disabled}
               name='mealType'
