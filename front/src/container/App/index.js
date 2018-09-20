@@ -40,6 +40,11 @@ const App = props => {
         />
         <Route
           exact
+          path='/detail/:uuid'
+          component={CreateCalories}
+        />
+        <Route
+          exact
           path='/summary'
           component={Summary}
         />
