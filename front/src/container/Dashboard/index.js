@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import styles from './styles.css'
 import {Card} from '../../components'
 
@@ -6,6 +7,19 @@ import { Add, Assessment } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
 
 class Dashboard extends React.Component {
+  state = {
+    items: []
+  }
+
+  componentDidMount () {
+    this.load()
+  }
+
+  async load () {
+    const items = await axios.get('http://localhost:5000/api/meals').then(response => response.data)
+    this.setState({items})
+  }
+
   goToAddCalories = e => {
     e && e.preventDefault()
     this.props.history.push('/add-calories')
@@ -16,35 +30,19 @@ class Dashboard extends React.Component {
     this.props.history.push('/summary')
   }
 
+  getDetail = uuid => e => {
+    e && e.preventDefault()
+    this.props.history.push(`/detail/${uuid}`)
+  }
+
   render () {
     return (
       <div className={styles.container}>
         <h1 className={styles.title}>Consumo de calorías</h1>
         <div className={styles.section}>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {this.state.items.map(item => {
+            return <Card onClick={this.getDetail} key={item.uuid} data={item} />
+          })}
           <div className={styles.btnContainer}>
             <IconButton
               color='primary'

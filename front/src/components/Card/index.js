@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Paper, Chip } from '@material-ui/core'
+import format from 'date-fns/format'
+import { UTCDate } from '../../helpers/getUTCDate'
 
 const InlStyles = theme => ({
   root: {
@@ -29,6 +31,14 @@ const InlStyles = theme => ({
     padding: '.5em',
     borderRadius: '4px 4px 0px 0px'
   },
+  title: {
+    fontSize: '1.3em',
+    color: 'white',
+    textAlign: 'center',
+    '@media (max-width: 1024px)': {
+      fontSize: '1em'
+    }
+  },
   total: {
     textAlign: 'center',
     padding: '1.5em 0',
@@ -52,8 +62,7 @@ const InlStyles = theme => ({
   },
   chipGroup: {
     padding: '.5em',
-    display: 'flex',
-    flexWrap: 'wrap'
+    textAlign: 'center'
   },
   chipRoot: {
     margin: '.5em .5em 0 0',
@@ -67,28 +76,56 @@ const InlStyles = theme => ({
   }
 })
 
+const MEAL_STYLE = {
+  'Desayuno': {
+    color: 'secondary',
+    className: 'chipRoot'
+  },
+  'Colación': {
+    color: 'primary',
+    className: 'chipRoot'
+  },
+  'Comida': {
+    color: 'default',
+    className: 'chipRoot'
+  },
+  'Cena': {
+    color: 'default',
+    className: 'dinner'
+  }
+}
+
+const MealType = ({ classes, label }) => (
+  <Chip
+    label={label}
+    color={MEAL_STYLE[label].color}
+    className={classes[MEAL_STYLE[label].className]}
+  />
+)
+
 const Card = (props) => {
-  const {classes} = props
+  const { classes, data, onClick } = props
+  const totalKcal = data.foods.reduce((sum, item) => sum + item.kcal, 0)
 
   return (
-    <Paper c className={classes.root}>
-      <div className={classes.header}>16/09/2018</div>
+    <Paper className={classes.root} onClick={onClick(data.uuid)}>
+      <div className={classes.header}>{UTCDate(data.date, 'd MMM YYYY')}</div>
+      <h1 className={classes.title}>{data.meal}</h1>
       <div className={classes.total}>
-        <h1 className={classes.totalNumber}>22</h1>
+        <h1 className={classes.totalNumber}>{totalKcal}</h1>
         <h1 className={classes.totalSubtitle}>Kcal</h1>
       </div>
       <div className={classes.chipGroup}>
-        <Chip label='Desayuno' color='secondary' className={classes.chipRoot} />
-        <Chip label='Colación' color='primary' className={classes.chipRoot} />
-        <Chip label='Comida' className={classes.dinner} />
-        <Chip label='Cena' className={classes.chipRoot} />
+        <MealType label={data.mealType.value} classes={classes} />
       </div>
     </Paper>
   )
 }
 
 Card.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default withStyles(InlStyles)(Card)

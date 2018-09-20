@@ -9,3 +9,12 @@ exports.addFoodTypes = async (req, res) => {
     res.status(400).send(e)
   }
 }
+
+exports.getFoodTypes = async (req, res) => {
+  try {
+    const data = await FoodType.find()
+    res.send(data)
+  } catch (e) {
+    res.status(400).send(e)
+  }
+}
