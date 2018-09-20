@@ -1,0 +1,48 @@
+.container {
+  /* border: 1px solid purple; */
+}
+
+.title {
+  text-align: center;
+  color: #f44336;
+}
+
+.section  {
+  display: flex;
+  width: 93%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  padding: 1em;
+}
+
+.btnContainer {
+  text-align: center;
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
+}
+
+@media screen and (max-width: 1024px) {
+  .section {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section {
+    width: 73%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .section {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .section {
+    width: 90%;
+    padding: 0;
+  }
+}

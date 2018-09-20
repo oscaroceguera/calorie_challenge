@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "start": "node server/server.js",
+    "start": "node server/server.js",
     "start:dev": "nodemon server/server.js",
     "test": "export NODE_ENV=test || SET NODE_ENV=test && mocha server/**/**/*.test.js --timeout 5000",
     "test:watch": "nodemon --exec \"npm test\""
@@ -20,8 +20,8 @@
     "cors": "^2.8.4",
     "es6-requireindex": "^0.3.10",
     "express": "^4.16.3",
-    "mongodb": "^3.0.10",
-    "mongoose": "^5.1.5",
+    "mongodb": "^3.1.6",
+    "mongoose": "^5.2.15",
     "morgan": "^1.9.0",
     "uuid": "^3.2.1"
   },
