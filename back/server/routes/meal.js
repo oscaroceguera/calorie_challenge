@@ -78,7 +78,7 @@ exports.updateMeal = async (req, res) => {
     const mealType = await MealType.findOne({ uuid: body.mealType })
     body.mealType = mealType._id
 
-    const meal = await Meal.findOneAndUpdate({ uuid: uuid }, { _creator: req.user._id }, { $set: body }, { new: true })
+    const meal = await Meal.findOneAndUpdate({ uuid: uuid }, { $set: body }, { new: true })
 
     if (!meal) {
       return res.status(404).send()

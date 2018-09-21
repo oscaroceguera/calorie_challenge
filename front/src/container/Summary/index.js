@@ -1,6 +1,11 @@
+import AuthService from '../Login/authService'
+import withAuth from '../Login/withAuth'
+const Auth = new AuthService()
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Paper, Tabs, Tab} from '@material-ui/core'
+import { NavMenu } from '../../components'
 
 import ByMonth from './ByMonth'
 import ByDay from './ByDay'
@@ -15,9 +20,15 @@ class Summary extends React.Component {
     this.setState({ value });
   }
 
+  logout = e => {
+    Auth.logout()
+    this.props.history.replace('/login')
+  }
+
   render () {
     return (
       <div>
+        <NavMenu username={this.props.user.username} logout={this.logout} />
         <h1 style={{textAlign: 'center', color: '#f44336'}}>Resumen de calorías</h1>
         <Paper square style={{ width: '50%', margin: '.5em auto' }}>
           <Tabs
@@ -39,4 +50,4 @@ class Summary extends React.Component {
   }
 }
 
-export default Summary
+export default withAuth(Summary)

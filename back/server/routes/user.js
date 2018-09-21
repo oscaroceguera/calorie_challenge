@@ -20,7 +20,12 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await User.findByCredentials(body.email, body.password)
     const token = await user.generateAuthToken()
-    res.header('x-auth', token).send(user)
+    res.json({
+      sucess: true,
+      err: null,
+      token,
+      user
+    })
   } catch (e) {
     res.status(400).send()
   }

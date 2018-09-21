@@ -1,7 +1,11 @@
+import AuthService from '../Login/authService'
+import withAuth from '../Login/withAuth'
+const Auth = new AuthService()
+
 import React from 'react'
 import axios from 'axios'
 import styles from './styles.css'
-import {Card} from '../../components'
+import { Card, NavMenu} from '../../components'
 
 import { Add, Assessment } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
@@ -16,7 +20,10 @@ class Dashboard extends React.Component {
   }
 
   async load () {
-    const items = await axios.get('http://localhost:5000/api/meals').then(response => response.data)
+    const token = localStorage.getItem('id_token')
+    const headers = { headers: { 'x-auth': token } }
+
+    const items = await axios.get('http://localhost:5000/api/meals', headers).then(response => response.data)
     this.setState({items})
   }
 
@@ -35,9 +42,16 @@ class Dashboard extends React.Component {
     this.props.history.push(`/detail/${uuid}`)
   }
 
+  logout = e => {
+    Auth.logout()
+    this.props.history.replace('/login')
+  }
+
   render () {
+    console.log('PROPS ==>', this.props)
     return (
       <div className={styles.container}>
+        <NavMenu username={this.props.user.username} logout={this.logout} />
         <h1 className={styles.title}>Consumo de calorías</h1>
         <div className={styles.section}>
           {this.state.items.map(item => {
@@ -67,4 +81,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard
+export default withAuth(Dashboard)
