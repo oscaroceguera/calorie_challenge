@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Paper, Chip } from '@material-ui/core'
-import format from 'date-fns/format'
 import { UTCDate } from '../../helpers/getUTCDate'
 
 const InlStyles = theme => ({
