@@ -5,6 +5,7 @@ import Card from './Card'
 import FoodCard from './Card/Food'
 import Autocomplete from './Fields/Autocomplete'
 import SimpleSelect from './Fields/Select'
+import StyledComponents from './LinearGradient'
 
 export {
   Circular,
@@ -12,5 +13,6 @@ export {
   Card,
   Autocomplete,
   FoodCard,
-  SimpleSelect
+  SimpleSelect,
+  StyledComponents
 }
