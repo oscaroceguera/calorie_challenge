@@ -4,6 +4,7 @@ const { FoodType } = require('../models/foodType')
 exports.getByYear = async (req, res) => {
   try {
     const data = await Meal.aggregate([
+      { $match: {_creator: req.user._id} },
       {
         $group: {
           _id: { year: { $year: '$date' } },
@@ -47,6 +48,7 @@ exports.getByYear = async (req, res) => {
 exports.getByMonth = async (req, res) => {
   try {
     const data = await Meal.aggregate([
+      { $match: { _creator: req.user._id } },
       {
         $group: {
           _id: { month: { $month: '$date' }, year: { $year: '$date' } },
@@ -90,6 +92,7 @@ exports.getByMonth = async (req, res) => {
 exports.getByDay = async (req, res) => {
   try {
     const data = await Meal.aggregate([
+      { $match: { _creator: req.user._id } },
       {
         $group: {
           _id: { month: { $month: '$date' }, year: { $year: '$date' }, day: { $dayOfMonth: '$date' } },

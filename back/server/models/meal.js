@@ -18,6 +18,10 @@ const MealSchema = new Schema({
   mealType: {
     type: Schema.Types.ObjectId,
     ref: 'MealType'
+  },
+  _creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 }, {timestamps: true})
 
