@@ -1,3 +1,7 @@
+import AuthService from '../Login/authService'
+import withAuth from '../Login/withAuth'
+const Auth = new AuthService()
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
@@ -17,7 +21,10 @@ class Detail extends React.Component {
   async load() {
     this.setState({ loading: true })
     try {
-      const items = await axios.get(`http://localhost:5000/api/summary/${this.props.summaryType}`).then(res => res.data)
+      const token = localStorage.getItem('id_token')
+      const headers = { headers: { 'x-auth': token } }
+
+      const items = await axios.get(`http://localhost:5000/api/summary/${this.props.summaryType}`, headers).then(res => res.data)
       this.setState({
         loading: false,
         items
@@ -29,6 +36,7 @@ class Detail extends React.Component {
       })
     }
   }
+
   render() {
     const { items } = this.state
     const { summaryType} = this.props
@@ -47,5 +55,5 @@ class Detail extends React.Component {
   }
 }
 
-export default Detail
+export default withAuth(Detail)
 
