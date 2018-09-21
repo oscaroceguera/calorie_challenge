@@ -16,6 +16,7 @@ const dynamicImport = importingComponent => (
 const Dashboard = dynamicImport(() => import('../Dashboard'))
 const CreateCalories = dynamicImport(() => import('../Calories/create'))
 const Summary = dynamicImport(() => import('../Summary'))
+const Login = dynamicImport(() => import('../Login'))
 
 const App = props => {
   const {history} = props
@@ -26,8 +27,10 @@ const App = props => {
         <Route
           exact
           path='/'
-          render={() => <Redirect to='/dashboard' />}
+          render={() => <Redirect to='/login' />}
         />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Login} />
         <Route
           exact
           path='/dashboard'

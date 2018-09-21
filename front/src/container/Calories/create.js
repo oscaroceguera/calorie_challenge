@@ -1,10 +1,15 @@
+import AuthService from '../Login/authService'
+import withAuth from '../Login/withAuth'
+const Auth = new AuthService()
+
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
+import { compose } from 'recompose'
 import { Paper, Avatar, Button, TextField } from '@material-ui/core'
 import keycode from 'keycode'
 import format from 'date-fns/format'
-import { Autocomplete, SimpleSelect, Circular } from '../../components'
+import { Autocomplete, SimpleSelect, Circular, NavMenu } from '../../components'
 import styles from './styles.css'
 import { UTCDate } from '../../helpers/getUTCDate'
 
@@ -28,6 +33,9 @@ const InlStyle = theme => ({
 })
 
 const getFoodUuid = (data, item) => data.find(i => i.label === item).uuid
+
+const token = localStorage.getItem('id_token')
+const headers = { headers: { 'x-auth': token } }
 
 const initialState = {
   meal: '',
@@ -60,8 +68,8 @@ class CreateCalories extends React.Component {
 
     try {
       const [foodCatalog, mealCatalog] = await Promise.all([
-        axios.get('http://localhost:5000/api/catalogs/foodTypes').then(res => res.data),
-        axios.get('http://localhost:5000/api/catalogs/mealTypes').then(res => res.data)
+        axios.get('http://localhost:5000/api/catalogs/foodTypes', headers).then(res => res.data),
+        axios.get('http://localhost:5000/api/catalogs/mealTypes', headers).then(res => res.data)
       ])
 
       this.setState({
@@ -80,7 +88,7 @@ class CreateCalories extends React.Component {
   async getDetail (uuid) {
     this.setState({ loading: true })
     try {
-      const data = await axios.get(`http://localhost:5000/api/meals/${uuid}`).then(res => res.data)
+      const data = await axios.get(`http://localhost:5000/api/meals/${uuid}`, headers).then(res => res.data)
       this.setState({
         loading: false,
         meal: data.meal,
@@ -152,9 +160,9 @@ class CreateCalories extends React.Component {
     const uuid = this.props.match.params.uuid
 
     try {
-      const response = await axios.patch(`http://localhost:5000/api/meals/${uuid}`, data)
+      const response = await axios.patch(`http://localhost:5000/api/meals/${uuid}`, data, headers)
       this.setState({ loading: false })
-      this.props.history.push('/')
+      this.props.history.push('/dashboard')
     } catch (e) {
       this.setState({
         error: e.message,
@@ -170,9 +178,9 @@ class CreateCalories extends React.Component {
     const data = { meal, foods: selectedFood, mealType, date }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/meals', data)
+      const response = await axios.post('http://localhost:5000/api/meals', data, headers)
       this.setState({loading: false})
-      this.props.history.push('/')
+      this.props.history.push('/dashboard')
     } catch (e) {
       this.setState({
         error: e.message,
@@ -186,7 +194,7 @@ class CreateCalories extends React.Component {
     const uuid = this.props.match.params.uuid
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/meals/${uuid}`)
+      const response = await axios.delete(`http://localhost:5000/api/meals/${uuid}`, headers)
       this.setState({ loading: false })
       this.props.history.push('/')
     } catch (e) {
@@ -201,8 +209,15 @@ class CreateCalories extends React.Component {
     this.setState(initialState)
   }
 
+  logout = e => {
+    Auth.logout()
+    this.props.history.replace('/login')
+  }
+
+
   render () {
     const {classes} = this.props
+
     const {
       meal, mealType, selectedItem,
       inputValue, selectedFood, loading,
@@ -224,7 +239,9 @@ class CreateCalories extends React.Component {
 
     return (
       <div>
-        <h1 className={styles.title}>Agregar Calorías</h1>
+        <NavMenu username={this.props.user.username} logout={this.logout} />
+
+        <h1 className={styles.title} >Agregar Calorías</h1>
         <Paper elevation={1} className={classes.root}>
           <TextField
             error={!this.state.meal}
@@ -264,7 +281,7 @@ class CreateCalories extends React.Component {
             handleChange={this.handleChange}
             handleDelete={this.handleDelete}
           />
-          <div className={styles.btnContainer}>
+          <div className={styles.btnContainer} >
             {this.props.match.params.uuid &&
               <Button
                 className={classes.deleteBtn}
@@ -291,4 +308,7 @@ class CreateCalories extends React.Component {
   }
 }
 
-export default withStyles(InlStyle)(CreateCalories)
+export default compose(
+  withStyles(InlStyle),
+  withAuth
+)(CreateCalories)

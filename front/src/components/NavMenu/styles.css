@@ -1,0 +1,17 @@
+.container {
+  background: #2196f3;
+  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  color: white;
+  font-weight: normal;
+}
+
+.btnCont {
+  margin-left: .5em;
+}

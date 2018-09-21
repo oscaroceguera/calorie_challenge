@@ -15,7 +15,13 @@ exports.addMeal = async (req, res) => {
     const mealType = await MealType.findOne({ uuid: req.body.mealType })
     req.body.mealType = mealType._id
 
-    const meal = new Meal(req.body)
+    const meal = new Meal({
+      meal: req.body.meal,
+      date: req.body.date,
+      foods: req.body.foods,
+      mealType: req.body.mealType,
+      _creator: req.user._id
+    })
 
     const doc = await meal.save()
     res.send(doc)
@@ -26,7 +32,7 @@ exports.addMeal = async (req, res) => {
 
 exports.getMeal = async (req, res) => {
   try {
-    const meals = await Meal.find()
+    const meals = await Meal.find({ _creator: req.user._id })
       .populate('foods')
       .populate('mealType')
       .sort('-date')
@@ -40,7 +46,10 @@ exports.getMeal = async (req, res) => {
 exports.getMealById = async (req, res) => {
   const uuid = req.params.uuid
   try {
-    const meal = await Meal.findOne({ uuid: uuid })
+    const meal = await Meal.findOne({
+      uuid: uuid,
+      _creator: req.user._id
+    })
       .populate('foods')
       .populate('mealType')
 
@@ -85,7 +94,10 @@ exports.deleteMeal = async (req, res) => {
   const uuid = req.params.uuid
 
   try {
-    const meal = await Meal.findOneAndRemove({ uuid: uuid })
+    const meal = await Meal.findOneAndRemove({
+      uuid: uuid,
+      _creator: req.user._id
+    })
 
     if (!meal) {
       return res.status(404).send()
