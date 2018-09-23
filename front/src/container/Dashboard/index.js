@@ -48,7 +48,6 @@ class Dashboard extends React.Component {
   }
 
   render () {
-    console.log('PROPS ==>', this.props)
     return (
       <div className={styles.container}>
         <NavMenu username={this.props.user.username} logout={this.logout} />
