@@ -1,8 +1,10 @@
 import React from 'react'
 import AuthService from './authService'
 
+const HOST = process.env.API_URL
+
 export default function withAuth (AuthComponent) {
-  const Auth = new AuthService('http://localhost:5000/api')
+  const Auth = new AuthService(`${HOST}/api`)
 
   return class AuthWrapped extends React.Component {
     constructor (props) {

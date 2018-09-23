@@ -1,8 +1,10 @@
 import decode from 'jwt-decode'
 
+const HOST = process.env.API_URL
+
 export default class AuthService {
   constructor (domain) {
-    this.domain = domain || 'http://localhost:5000/api'
+    this.domain = domain || `${HOST}/api`
     this.fetch = this.fetch.bind(this)
     this.login = this.login.bind(this)
     this.getProfile = this.getProfile.bind(this)
