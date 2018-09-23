@@ -7,6 +7,8 @@ import { isEmail } from 'validator'
 import axios from 'axios'
 import AuthService from './authService'
 
+const HOST = process.env.API_URL
+
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
@@ -59,7 +61,7 @@ class Login extends React.Component {
       password: this.state.password
     }
     try {
-      await axios.post('http://localhost:5000/api/users', data)
+      await axios.post(`${HOST}/api/users`, data)
       this.handleLogin()
     } catch (e) {
       alert(err)
