@@ -1,6 +1,7 @@
 const merge = require('webpack-merge')
 const common = require('./webpack.common')
 const BundleAnalizerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const Dotenv = require('dotenv-webpack')
 
 module.exports = merge(common, {
   mode: 'development',
@@ -10,6 +11,9 @@ module.exports = merge(common, {
     historyApiFallback: true
   },
   plugins: [
-    new BundleAnalizerPlugin()
+    new BundleAnalizerPlugin(),
+    new Dotenv({
+      path: './.env.development'
+    })
   ]
 })

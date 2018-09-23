@@ -20,6 +20,7 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.16",
+    "dotenv-webpack": "^1.5.7",
     "downshift": "^2.2.2",
     "jwt-decode": "^2.2.0",
     "keycode": "^2.2.0",

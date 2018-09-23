@@ -13,6 +13,8 @@ import { Autocomplete, SimpleSelect, Circular, NavMenu } from '../../components'
 import styles from './styles.css'
 import { UTCDate } from '../../helpers/getUTCDate'
 
+const HOST = process.env.API_URL
+
 const InlStyle = theme => ({
   root: {
     padding: '1em',
@@ -68,8 +70,8 @@ class CreateCalories extends React.Component {
 
     try {
       const [foodCatalog, mealCatalog] = await Promise.all([
-        axios.get('http://localhost:5000/api/catalogs/foodTypes', headers).then(res => res.data),
-        axios.get('http://localhost:5000/api/catalogs/mealTypes', headers).then(res => res.data)
+        axios.get(`${HOST}/api/catalogs/foodTypes`, headers).then(res => res.data),
+        axios.get(`${HOST}/api/catalogs/mealTypes`, headers).then(res => res.data)
       ])
 
       this.setState({
@@ -88,7 +90,7 @@ class CreateCalories extends React.Component {
   async getDetail (uuid) {
     this.setState({ loading: true })
     try {
-      const data = await axios.get(`http://localhost:5000/api/meals/${uuid}`, headers).then(res => res.data)
+      const data = await axios.get(`${HOST}/api/meals/${uuid}`, headers).then(res => res.data)
       this.setState({
         loading: false,
         meal: data.meal,
@@ -160,7 +162,7 @@ class CreateCalories extends React.Component {
     const uuid = this.props.match.params.uuid
 
     try {
-      const response = await axios.patch(`http://localhost:5000/api/meals/${uuid}`, data, headers)
+      const response = await axios.patch(`${HOST}/api/meals/${uuid}`, data, headers)
       this.setState({ loading: false })
       this.props.history.push('/dashboard')
     } catch (e) {
@@ -178,7 +180,7 @@ class CreateCalories extends React.Component {
     const data = { meal, foods: selectedFood, mealType, date }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/meals', data, headers)
+      const response = await axios.post(`${HOST}/api/meals`, data, headers)
       this.setState({loading: false})
       this.props.history.push('/dashboard')
     } catch (e) {
@@ -194,7 +196,7 @@ class CreateCalories extends React.Component {
     const uuid = this.props.match.params.uuid
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/meals/${uuid}`, headers)
+      const response = await axios.delete(`${HOST}/api/meals/${uuid}`, headers)
       this.setState({ loading: false })
       this.props.history.push('/')
     } catch (e) {

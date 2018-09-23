@@ -9,6 +9,8 @@ import format from 'date-fns/format'
 import esLocale from 'date-fns/locale/es'
 import { StyledComponents } from '../../components'
 
+const HOST = process.env.API_URL
+
 class Detail extends React.Component {
   state = {
     items: [],
@@ -24,7 +26,7 @@ class Detail extends React.Component {
       const token = localStorage.getItem('id_token')
       const headers = { headers: { 'x-auth': token } }
 
-      const items = await axios.get(`http://localhost:5000/api/summary/${this.props.summaryType}`, headers).then(res => res.data)
+      const items = await axios.get(`${HOST}/api/summary/${this.props.summaryType}`, headers).then(res => res.data)
       this.setState({
         loading: false,
         items

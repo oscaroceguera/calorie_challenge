@@ -10,6 +10,11 @@ import { Card, NavMenu} from '../../components'
 import { Add, Assessment } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
 
+const HOST = process.env.API_URL
+
+console.log('HOST ===>', HOST)
+
+
 class Dashboard extends React.Component {
   state = {
     items: []
@@ -23,7 +28,7 @@ class Dashboard extends React.Component {
     const token = localStorage.getItem('id_token')
     const headers = { headers: { 'x-auth': token } }
 
-    const items = await axios.get('http://localhost:5000/api/meals', headers).then(response => response.data)
+    const items = await axios.get(`${HOST}/api/meals`, headers).then(response => response.data)
     this.setState({items})
   }
 
@@ -48,7 +53,6 @@ class Dashboard extends React.Component {
   }
 
   render () {
-    console.log('PROPS ==>', this.props)
     return (
       <div className={styles.container}>
         <NavMenu username={this.props.user.username} logout={this.logout} />
